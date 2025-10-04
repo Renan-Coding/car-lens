@@ -103,7 +103,7 @@ Agora responda à pergunta do usuário:`;
       .trim();
 
     return NextResponse.json({
-      message: aiResponse,
+      response: aiResponse,
       timestamp: new Date().toISOString()
     });
 
