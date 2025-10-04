@@ -22,10 +22,6 @@ export default function CatalogPage() {
   }, []);
 
   useEffect(() => {
-    sortCars();
-  }, [cars, sortBy]);
-
-  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
@@ -64,11 +60,9 @@ export default function CatalogPage() {
     }
   };
 
-  const sortCars = () => {
-    let sorted = [...cars];
-
-    // Ordenação
-    sorted.sort((a, b) => {
+  // Função para ordenar carros
+  const sortCars = (carsToSort: SearchResult[]) => {
+    const sorted = [...carsToSort].sort((a, b) => {
       switch (sortBy) {
         case 'price-asc':
           return a.car.Price - b.car.Price;
@@ -80,9 +74,28 @@ export default function CatalogPage() {
           return 0;
       }
     });
-
-    setFilteredCars(sorted);
+    return sorted;
   };
+
+  // Effect para filtrar e ordenar carros
+  useEffect(() => {
+    const filtered = cars.filter(car => {
+      const matchesSearch = !searchQuery || 
+        car.car.Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        car.car.Model.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesLocation = !searchLocation || 
+        car.car.Name.toLowerCase().includes(searchLocation.toLowerCase()) ||
+        car.car.Model.toLowerCase().includes(searchLocation.toLowerCase());
+      
+      const matchesPrice = maxPrice === undefined || car.car.Price <= maxPrice;
+      
+      return matchesSearch && matchesLocation && matchesPrice;
+    });
+    
+    const sorted = sortCars(filtered);
+    setFilteredCars(sorted);
+  }, [searchQuery, searchLocation, maxPrice, sortBy, cars]);
 
   const getSortLabel = () => {
     switch (sortBy) {
@@ -90,6 +103,8 @@ export default function CatalogPage() {
         return 'Menor Preço';
       case 'price-desc':
         return 'Maior Preço';
+      case 'brand':
+        return 'Marca A-Z';
       default:
         return 'Ordenar';
     }
@@ -98,7 +113,8 @@ export default function CatalogPage() {
   const sortOptions = [
     { value: 'price-asc', label: 'Menor Preço' },
     { value: 'price-desc', label: 'Maior Preço' },
-    ];
+    { value: 'brand', label: 'Marca A-Z' },
+  ];
 
   return (
     <div className="min-h-screen bg-hero-gradient">

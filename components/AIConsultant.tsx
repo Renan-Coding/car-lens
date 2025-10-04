@@ -22,7 +22,7 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
       return [{
         id: '1',
-        text: '🚗 Olá! Sou a CarLens AI, sua consultora automotiva pessoal! Como posso ajudá-lo a encontrar o carro perfeito hoje?',
+        text: 'Olá! 👋 Sou sua consultora automotiva IA! Como posso ajudá-lo hoje? Posso recomendar carros, comparar modelos, tirar dúvidas técnicas ou dar dicas de compra!',
         isUser: false,
         timestamp: new Date()
       }];
@@ -49,7 +49,7 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
   }, [isOpen]);
 
   const sendMessage = async () => {
-    if (!inputMessage.trim() || isLoading) return;
+    if (!inputMessage.trim() || isLoading) return; // Adicionei return explícito
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -70,6 +70,7 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
       timestamp: new Date(),
       isTyping: true
     };
+
     setMessages(prev => [...prev, typingMessage]);
 
     try {
@@ -78,35 +79,28 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          message: inputMessage,
-          context: `Usuário está navegando na CarLens, uma plataforma de busca de carros no Brasil.`
-        }),
+        body: JSON.stringify({ message: inputMessage }),
       });
-
-      if (!response.ok) {
-        throw new Error('Falha na comunicação com a IA');
-      }
 
       const data = await response.json();
 
-      // Remover indicador de digitação e adicionar resposta real
+      // Remover indicador de digitação e adicionar resposta
       setMessages(prev => {
         const withoutTyping = prev.filter(msg => msg.id !== 'typing');
         return [...withoutTyping, {
           id: Date.now().toString(),
-          text: data.message,
+          text: data.response || 'Desculpe, houve um erro. Tente novamente.',
           isUser: false,
           timestamp: new Date()
         }];
       });
-
     } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
       setMessages(prev => {
         const withoutTyping = prev.filter(msg => msg.id !== 'typing');
         return [...withoutTyping, {
           id: Date.now().toString(),
-          text: '🔧 Desculpe, estou com problemas técnicos no momento. Tente novamente em alguns instantes!',
+          text: 'Desculpe, houve um erro de conexão. Tente novamente.',
           isUser: false,
           timestamp: new Date()
         }];
