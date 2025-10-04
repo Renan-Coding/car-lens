@@ -66,6 +66,7 @@ const MatchTypeTag = ({ type }: { type: SearchResult['matchType'] }) => {
 // Função para mapear o nome e modelo do carro para a imagem correta
 const getCarImage = (name: string, model: string) => {
   const carKey = `${name.toLowerCase()}_${model.toLowerCase()}`;
+  
   const imageMap: { [key: string]: string } = {
     'byd_dolphin': '/img_cars/byd_dolphin.jpg',
     'toyota_corolla': '/img_cars/toyota_corolla.jpg',
@@ -79,7 +80,7 @@ const getCarImage = (name: string, model: string) => {
     'peugeot_208': '/img_cars/peugeot_208.jpg',
   };
   
-  return imageMap[carKey] || '/img_cars/byd_dolphin.jpg'; // fallback para BYD Dolphin
+  return imageMap[carKey] || '/img_cars/byd_dolphin.jpg';
 };
 
 // Função para obter o tipo de combustível baseado na marca/modelo

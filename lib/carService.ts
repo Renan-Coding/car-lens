@@ -37,9 +37,10 @@ export interface SearchResult {
  * @returns Uma promessa que resolve para um array de SearchResult.
  */
 export const searchCars = async (params: SearchParams): Promise<SearchResult[]> => {
-  const filePath = path.join(process.cwd(), 'data', 'cars.json');
-  const jsonData = await fs.readFile(filePath, 'utf-8');
-  const cars: Car[] = JSON.parse(jsonData);
+  try {
+    const filePath = path.join(process.cwd(), 'data', 'cars.json');
+    const jsonData = await fs.readFile(filePath, 'utf-8');
+    const cars: Car[] = JSON.parse(jsonData);
 
   // Normaliza os inputs do usuário para uma busca mais flexível
   const query = params.query?.trim().toLowerCase();
@@ -101,4 +102,8 @@ export const searchCars = async (params: SearchParams): Promise<SearchResult[]> 
   }
 
   return results;
+  } catch (error) {
+    console.error('Erro na função searchCars:', error);
+    throw new Error(`Erro ao buscar carros: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+  }
 };
