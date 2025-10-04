@@ -36,11 +36,92 @@ export interface SearchResult {
  * @param params - Os parâmetros de busca (query, location, maxPrice).
  * @returns Uma promessa que resolve para um array de SearchResult.
  */
+// Dados dos carros inline para maior compatibilidade com Vercel
+const carsData: Car[] = [
+  {
+    "Name": "BYD",
+    "Model": "Dolphin",
+    "Image": "byd_dolphin.jpg",
+    "Price": 99990,
+    "Location": "São Paulo"
+  },
+  {
+    "Name": "Toyota",
+    "Model": "Corolla",
+    "Image": "toyota_corolla.jpg",
+    "Price": 112000,
+    "Location": "São Paulo"
+  },
+  {
+    "Name": "Volkswagen",
+    "Model": "T-Cross",
+    "Image": "volkswagen_tcross.jpg",
+    "Price": 118500,
+    "Location": "Campinas"
+  },
+  {
+    "Name": "Honda",
+    "Model": "Civic",
+    "Image": "honda_civic.jpg",
+    "Price": 105000,
+    "Location": "Rio de Janeiro"
+  },
+  {
+    "Name": "Chevrolet",
+    "Model": "Onix",
+    "Image": "chevrolet_onix.jpg",
+    "Price": 85000,
+    "Location": "Belo Horizonte"
+  },
+  {
+    "Name": "Hyundai",
+    "Model": "HB20",
+    "Image": "hyundai_hb20.jpg",
+    "Price": 79000,
+    "Location": "São Paulo"
+  },
+  {
+    "Name": "Renault",
+    "Model": "Kwid",
+    "Image": "renault_kwid.jpg",
+    "Price": 68990,
+    "Location": "Curitiba"
+  },
+  {
+    "Name": "Fiat",
+    "Model": "Pulse",
+    "Image": "fiat_pulse.jpg",
+    "Price": 96000,
+    "Location": "São Paulo"
+  },
+  {
+    "Name": "Jeep",
+    "Model": "Renegade",
+    "Image": "jeep_renegade.jpg",
+    "Price": 122000,
+    "Location": "Porto Alegre"
+  },
+  {
+    "Name": "Peugeot",
+    "Model": "208",
+    "Image": "peugeot_208.jpg",
+    "Price": 87500,
+    "Location": "São Paulo"
+  }
+];
+
 export const searchCars = async (params: SearchParams): Promise<SearchResult[]> => {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'cars.json');
-    const jsonData = await fs.readFile(filePath, 'utf-8');
-    const cars: Car[] = JSON.parse(jsonData);
+    // Tenta carregar do arquivo primeiro, se falhar usa os dados inline
+    let cars: Car[] = carsData;
+    
+    try {
+      const filePath = path.join(process.cwd(), 'data', 'cars.json');
+      const jsonData = await fs.readFile(filePath, 'utf-8');
+      cars = JSON.parse(jsonData);
+    } catch (fileError) {
+      console.log('Usando dados inline:', fileError);
+    }
 
   // Normaliza os inputs do usuário para uma busca mais flexível
   const query = params.query?.trim().toLowerCase();
