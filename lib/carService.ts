@@ -8,6 +8,9 @@ export interface Car {
   Image: string;
   Price: number;
   Location: string;
+  Fuel?: string;
+  Transmission?: string;
+  Year?: string;
 }
 
 // Define os parâmetros que nossa função de busca pode receber.
@@ -43,9 +46,12 @@ export const searchCars = async (params: SearchParams): Promise<SearchResult[]> 
   const location = params.location?.trim().toLowerCase();
   const maxPrice = params.maxPrice;
 
-  // Se não houver nenhum critério de busca, retorna uma lista vazia.
+  // Se não houver nenhum critério de busca, retorna todos os carros como 'ideal'
   if (!query && !location && !maxPrice) {
-    return [];
+    return cars.map(car => ({
+      car,
+      matchType: 'ideal' as MatchType
+    }));
   }
   
   const results: SearchResult[] = [];
