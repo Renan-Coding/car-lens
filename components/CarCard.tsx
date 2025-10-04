@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Sparkles, DollarSign, MapPin, Target, Heart, BarChart3 } from 'lucide-react';
 import { SearchResult } from '@/lib/carService';
 
 interface CarCardProps {
@@ -22,25 +23,25 @@ const MatchTypeTag = ({ type }: { type: SearchResult['matchType'] }) => {
   const configs = {
     'ideal': {
       label: 'Combinação Perfeita',
-      icon: '✨',
+      icon: <Sparkles className="w-4 h-4" />,
       gradient: 'from-neon-green to-emerald-400',
       glow: 'shadow-glow-green'
     },
     'preco_acima': {
       label: 'Acima do Orçamento',
-      icon: '💰',
+      icon: <DollarSign className="w-4 h-4" />,
       gradient: 'from-neon-yellow to-amber-400',
       glow: 'shadow-glow-yellow'
     },
     'outra_localidade': {
       label: 'Outra Localidade',
-      icon: '📍',
+      icon: <MapPin className="w-4 h-4" />,
       gradient: 'from-neon-blue to-blue-400',
       glow: 'shadow-glow-blue'
     },
     'sugestao': {
       label: 'Sugestão Especial',
-      icon: '🎯',
+      icon: <Target className="w-4 h-4" />,
       gradient: 'from-neon-purple to-purple-400',
       glow: 'shadow-glow-purple'
     }
@@ -184,10 +185,10 @@ export default function CarCard({ result, showMatchType = true }: CarCardProps) 
           className="absolute top-4 left-4 flex space-x-2"
         >
           <button className="w-10 h-10 bg-dark-secondary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neon-blue hover:bg-neon-blue hover:text-white transition-all duration-300">
-            ❤️
+            <Heart className="w-5 h-5" />
           </button>
           <button className="w-10 h-10 bg-dark-secondary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neon-purple hover:bg-neon-purple hover:text-white transition-all duration-300">
-            📊
+            <BarChart3 className="w-5 h-5" />
           </button>
         </motion.div>
       </div>
@@ -203,7 +204,7 @@ export default function CarCard({ result, showMatchType = true }: CarCardProps) 
 
         {/* Localização com Ícone */}
         <div className="flex items-center space-x-2 mb-4 text-text-secondary">
-          <span className="text-neon-green">📍</span>
+          <MapPin className="w-4 h-4 text-neon-green" />
           <span className="text-sm font-medium">{car.Location}</span>
         </div>
 

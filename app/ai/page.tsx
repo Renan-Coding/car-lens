@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { Car, DollarSign, Wrench, BarChart3, Shield, Zap, MessageCircle, Brain, Target } from 'lucide-react';
 import AIConsultant from '@/components/AIConsultant';
 
 export default function AIPage() {
@@ -10,32 +11,32 @@ export default function AIPage() {
 
   const features = [
     {
-      icon: '🚗',
+      icon: <Car className="w-10 h-10" />,
       title: 'Recomendações Personalizadas',
       description: 'Nossa IA analisa suas preferências e orçamento para sugerir os carros perfeitos para você.'
     },
     {
-      icon: '💰',
+      icon: <DollarSign className="w-10 h-10" />,
       title: 'Análise de Preços',
       description: 'Compare preços em tempo real e descubra as melhores oportunidades do mercado automotivo.'
     },
     {
-      icon: '🔧',
+      icon: <Wrench className="w-10 h-10" />,
       title: 'Consultoria Técnica',
       description: 'Tire dúvidas sobre mecânica, manutenção, consumo e especificações técnicas dos veículos.'
     },
     {
-      icon: '📊',
+      icon: <BarChart3 className="w-10 h-10" />,
       title: 'Comparações Inteligentes',
       description: 'Compare modelos lado a lado com análise detalhada de prós e contras de cada veículo.'
     },
     {
-      icon: '🛡️',
+      icon: <Shield className="w-10 h-10" />,
       title: 'Dicas de Segurança',
       description: 'Informações sobre seguros, documentação e cuidados na compra de veículos usados.'
     },
     {
-      icon: '⚡',
+      icon: <Zap className="w-10 h-10" />,
       title: 'Respostas Instantâneas',
       description: 'Assistência 24/7 com respostas rápidas e precisas para todas suas dúvidas automotivas.'
     }
@@ -94,7 +95,7 @@ export default function AIPage() {
               className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 hover:border-blue-500/50 transition-all duration-300"
               whileHover={{ scale: 1.02, y: -5 }}
             >
-              <div className="text-4xl mb-4">{feature.icon}</div>
+              <div className="mb-4 text-blue-400">{feature.icon}</div>
               <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
               <p className="text-gray-300 leading-relaxed">{feature.description}</p>
             </motion.div>
@@ -121,7 +122,9 @@ export default function AIPage() {
               whileHover={{ scale: 1.05 }}
               className="p-6"
             >
-              <div className="text-5xl mb-4">💬</div>
+              <div className="mb-4 flex justify-center">
+                <MessageCircle className="w-12 h-12 text-blue-400" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">1. Converse</h3>
               <p className="text-gray-300">Descreva o que você procura em um carro</p>
             </motion.div>
@@ -130,7 +133,9 @@ export default function AIPage() {
               whileHover={{ scale: 1.05 }}
               className="p-6"
             >
-              <div className="text-5xl mb-4">🧠</div>
+              <div className="mb-4 flex justify-center">
+                <Brain className="w-12 h-12 text-purple-400" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">2. IA Analisa</h3>
               <p className="text-gray-300">Nossa IA processa suas necessidades</p>
             </motion.div>
@@ -139,7 +144,9 @@ export default function AIPage() {
               whileHover={{ scale: 1.05 }}
               className="p-6"
             >
-              <div className="text-5xl mb-4">🎯</div>
+              <div className="mb-4 flex justify-center">
+                <Target className="w-12 h-12 text-green-400" />
+              </div>
               <h3 className="text-lg font-bold text-white mb-2">3. Recomendação</h3>
               <p className="text-gray-300">Receba sugestões personalizadas</p>
             </motion.div>

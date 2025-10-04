@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Settings, DollarSign, Cog, MapPin, Sparkles, Trash2, X, ChevronDown, Route, Factory } from 'lucide-react';
 
 interface AdvancedFiltersProps {
   onFiltersChange: (filters: FilterState) => void;
@@ -161,10 +162,10 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
   );
 
   const tabs = [
-    { id: 'price', label: '💰 Preço & Ano', icon: '💰' },
-    { id: 'specs', label: '⚙️ Especificações', icon: '⚙️' },
-    { id: 'location', label: '📍 Localização', icon: '📍' },
-    { id: 'features', label: '✨ Recursos', icon: '✨' }
+    { id: 'price', label: 'Preço & Ano', icon: <DollarSign className="w-4 h-4" /> },
+    { id: 'specs', label: 'Especificações', icon: <Cog className="w-4 h-4" /> },
+    { id: 'location', label: 'Localização', icon: <MapPin className="w-4 h-4" /> },
+    { id: 'features', label: 'Recursos', icon: <Sparkles className="w-4 h-4" /> }
   ];
 
   return (
@@ -178,14 +179,14 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
             : 'bg-dark-secondary border border-dark-border text-text-secondary hover:border-neon-purple hover:text-neon-purple'
         }`}
       >
-        <span>🔧</span>
+        <Settings className="w-5 h-5" />
         <span>Filtros Avançados</span>
-        <motion.span
+        <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
         >
-          ⌄
-        </motion.span>
+          <ChevronDown className="w-4 h-4" />
+        </motion.div>
       </button>
 
       {/* Painel de Filtros */}
@@ -207,15 +208,16 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                 <div className="flex items-center space-x-3">
                   <button
                     onClick={clearAllFilters}
-                    className="text-sm text-neon-red hover:text-red-400 transition-colors duration-300"
+                    className="text-sm text-neon-red hover:text-red-400 transition-colors duration-300 flex items-center space-x-1"
                   >
-                    🗑️ Limpar Tudo
+                    <Trash2 className="w-4 h-4" />
+                    <span>Limpar Tudo</span>
                   </button>
                   <button
                     onClick={onToggle}
                     className="text-text-secondary hover:text-neon-purple transition-colors duration-300"
                   >
-                    ✕
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
               </div>
@@ -254,7 +256,7 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                     className="space-y-8"
                   >
                     <RangeSlider
-                      label="💰 Faixa de Preço"
+                      label="Faixa de Preço"
                       min={20000}
                       max={500000}
                       step={5000}
@@ -264,7 +266,7 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                     />
                     
                     <RangeSlider
-                      label="📅 Ano do Veículo"
+                      label="Ano do Veículo"
                       min={2010}
                       max={2024}
                       step={1}
@@ -273,7 +275,7 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                     />
 
                     <RangeSlider
-                      label="🛣️ Quilometragem"
+                      label="Quilometragem"
                       min={0}
                       max={200000}
                       step={5000}
@@ -294,21 +296,21 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                     className="space-y-8"
                   >
                     <CheckboxGroup
-                      title="⛽ Tipo de Combustível"
+                      title="Tipo de Combustível"
                       options={['Flex', 'Gasolina', 'Diesel', 'Elétrico', 'Híbrido']}
                       selected={filters.fuelType}
                       onChange={(item) => handleArrayFilter('fuelType', item)}
                     />
 
                     <CheckboxGroup
-                      title="⚙️ Transmissão"
+                      title="Transmissão"
                       options={['Manual', 'Automático', 'CVT', 'Semi-automático']}
                       selected={filters.transmission}
                       onChange={(item) => handleArrayFilter('transmission', item)}
                     />
 
                     <CheckboxGroup
-                      title="🚗 Tipo de Carroceria"
+                      title="Tipo de Carroceria"
                       options={['Sedan', 'Hatch', 'SUV', 'Pickup', 'Conversível', 'Wagon']}
                       selected={filters.bodyType}
                       onChange={(item) => handleArrayFilter('bodyType', item)}
@@ -326,14 +328,14 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                     className="space-y-8"
                   >
                     <CheckboxGroup
-                      title="📍 Localização"
+                      title="Localização"
                       options={['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Brasília', 'Campinas', 'Porto Alegre', 'Curitiba', 'Salvador']}
                       selected={filters.location}
                       onChange={(item) => handleArrayFilter('location', item)}
                     />
 
                     <CheckboxGroup
-                      title="🏭 Marca"
+                      title="Marca"
                       options={['Toyota', 'Honda', 'Volkswagen', 'Chevrolet', 'Hyundai', 'BYD', 'Renault', 'Fiat', 'Jeep', 'Peugeot']}
                       selected={filters.brand}
                       onChange={(item) => handleArrayFilter('brand', item)}
@@ -351,7 +353,7 @@ export default function AdvancedFilters({ onFiltersChange, isOpen, onToggle }: A
                     className="space-y-8"
                   >
                     <CheckboxGroup
-                      title="✨ Recursos e Equipamentos"
+                      title="Recursos e Equipamentos"
                       options={[
                         'Ar Condicionado',
                         'Direção Hidráulica', 

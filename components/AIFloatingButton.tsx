@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { MessageCircle } from 'lucide-react';
 import AIConsultant from './AIConsultant';
 
 export default function AIFloatingButton() {
@@ -53,7 +54,10 @@ export default function AIFloatingButton() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 2, duration: 0.3 }}
         >
-          <div className="text-sm font-medium">💬 Precisa de ajuda?</div>
+          <div className="text-sm font-medium flex items-center space-x-1">
+            <MessageCircle className="w-4 h-4" />
+            <span>Precisa de ajuda?</span>
+          </div>
           <div className="text-xs text-gray-300">Fale com nossa IA especialista!</div>
           
           {/* Arrow */}

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { Check, AlertTriangle, Settings, Scale, Car, Trophy, DollarSign, Zap, Leaf, Wrench } from 'lucide-react';
 
 interface Car {
   name: string;
@@ -338,7 +339,7 @@ export default function ComparePage() {
               <div className="space-y-2">
                 {car.features.map((feature, idx) => (
                   <div key={idx} className="flex items-center space-x-2">
-                    <span className="text-neon-green">✅</span>
+                    <Check className="w-4 h-4 text-neon-green" />
                     <span className="text-text-secondary text-sm">{feature}</span>
                   </div>
                 ))}
@@ -356,8 +357,9 @@ export default function ComparePage() {
             >
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-orbitron text-sm font-bold text-neon-green mb-2 flex items-center">
-                    ✅ Pontos Positivos
+                  <h4 className="font-orbitron text-sm font-bold text-neon-green mb-2 flex items-center space-x-2">
+                    <Check className="w-4 h-4" />
+                    <span>Pontos Positivos</span>
                   </h4>
                   <div className="space-y-1">
                     {car.pros.map((pro, idx) => (
@@ -369,8 +371,9 @@ export default function ComparePage() {
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-orbitron text-sm font-bold text-neon-red mb-2 flex items-center">
-                    ⚠️ Pontos de Atenção
+                  <h4 className="font-orbitron text-sm font-bold text-neon-red mb-2 flex items-center space-x-2">
+                    <AlertTriangle className="w-4 h-4" />
+                    <span>Pontos de Atenção</span>
                   </h4>
                   <div className="space-y-1">
                     {car.cons.map((con, idx) => (
@@ -549,7 +552,9 @@ export default function ComparePage() {
             transition={{ duration: 0.3 }}
             className="text-center py-20"
           >
-            <div className="text-8xl mb-6">🚗</div>
+            <div className="mb-6 flex justify-center">
+              <Car className="w-24 h-24 text-text-secondary" />
+            </div>
             <h3 className="font-orbitron text-3xl font-bold text-text-primary mb-4">
               Pronto para Comparar?
             </h3>
@@ -601,7 +606,10 @@ export default function ComparePage() {
                         : 'bg-dark-secondary text-text-secondary hover:text-blue-500 hover:bg-dark-secondary/80'
                     }`}
                   >
-                    🔧 Especificações
+                    <div className="flex items-center space-x-2">
+                      <Wrench className="w-4 h-4" />
+                      <span>Especificações</span>
+                    </div>
                   </button>
                   <button
                     onClick={() => setComparisonMode('features')}
@@ -611,7 +619,10 @@ export default function ComparePage() {
                         : 'bg-dark-secondary text-text-secondary hover:text-blue-500 hover:bg-dark-secondary/80'
                     }`}
                   >
-                    ⚙️ Equipamentos
+                    <div className="flex items-center space-x-2">
+                      <Settings className="w-4 h-4" />
+                      <span>Equipamentos</span>
+                    </div>
                   </button>
                   <button
                     onClick={() => setComparisonMode('pros-cons')}
@@ -621,7 +632,10 @@ export default function ComparePage() {
                         : 'bg-dark-secondary text-text-secondary hover:text-blue-500 hover:bg-dark-secondary/80'
                     }`}
                   >
-                    ⚖️ Prós e Contras
+                    <div className="flex items-center space-x-2">
+                      <Scale className="w-4 h-4" />
+                      <span>Prós e Contras</span>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -648,12 +662,17 @@ export default function ComparePage() {
             className="bg-card-gradient backdrop-blur-xl rounded-2xl border border-dark-border/50 p-8 text-center"
           >
             <h2 className="font-orbitron text-2xl font-bold text-text-primary mb-6">
-              🏆 Resultado da Comparação
+              <div className="flex items-center justify-center space-x-2">
+                <Trophy className="w-6 h-6" />
+                <span>Resultado da Comparação</span>
+              </div>
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-dark-secondary/50 rounded-xl p-6">
-                <div className="text-3xl mb-2">💰</div>
+                <div className="mb-2 flex justify-center">
+                  <DollarSign className="w-8 h-8 text-neon-green" />
+                </div>
                 <h3 className="font-orbitron font-bold text-neon-green mb-2">Melhor Preço</h3>
                 <p className="text-text-secondary text-sm">
                   {comparison.cheaper.name} {comparison.cheaper.model} - {formatPrice(comparison.cheaper.price)}
@@ -661,7 +680,9 @@ export default function ComparePage() {
               </div>
               
               <div className="bg-dark-secondary/50 rounded-xl p-6">
-                <div className="text-3xl mb-2">⚡</div>
+                <div className="mb-2 flex justify-center">
+                  <Zap className="w-8 h-8 text-neon-blue" />
+                </div>
                 <h3 className="font-orbitron font-bold text-neon-blue mb-2">Mais Potente</h3>
                 <p className="text-text-secondary text-sm">
                   {comparison.morePowerful.name} {comparison.morePowerful.model} - {comparison.morePowerful.specs.power}
@@ -669,7 +690,9 @@ export default function ComparePage() {
               </div>
               
               <div className="bg-dark-secondary/50 rounded-xl p-6">
-                <div className="text-3xl mb-2">🌱</div>
+                <div className="mb-2 flex justify-center">
+                  <Leaf className="w-8 h-8 text-neon-purple" />
+                </div>
                 <h3 className="font-orbitron font-bold text-neon-purple mb-2">Mais Econômico</h3>
                 <p className="text-text-secondary text-sm">
                   {comparison.moreEconomical.name} {comparison.moreEconomical.model}

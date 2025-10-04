@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Car, Zap, Wrench, DollarSign, Shield, Lightbulb, Send, Hand } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -22,7 +23,7 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
     if (typeof window !== 'undefined' && window.innerWidth >= 768) {
       return [{
         id: '1',
-        text: 'Olá! 👋 Sou sua consultora automotiva IA! Como posso ajudá-lo hoje? Posso recomendar carros, comparar modelos, tirar dúvidas técnicas ou dar dicas de compra!',
+        text: 'Olá! Sou sua consultora automotiva IA! Como posso ajudá-lo hoje? Posso recomendar carros, comparar modelos, tirar dúvidas técnicas ou dar dicas de compra!',
         isUser: false,
         timestamp: new Date()
       }];
@@ -118,11 +119,11 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
   };
 
   const quickQuestions = [
-    '🚗 Qual o melhor carro até R$ 100mil?',
-    '⚡ Carros mais econômicos de 2024',
-    '🔧 SUVs mais confiáveis',
-    '💰 Como negociar o preço?',
-    '🛡️ Seguro para carros novos'
+    'Qual o melhor carro até R$ 100mil?',
+    'Carros mais econômicos de 2024',
+    'SUVs mais confiáveis',
+    'Como negociar o preço?',
+    'Seguro para carros novos'
   ];
 
   const formatTime = (date: Date) => {
@@ -208,15 +209,18 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
           {/* Quick Questions */}
           {messages.length <= 1 && (
             <div className="px-4 pb-2">
-              <p className="text-xs text-gray-400 mb-2">💡 Perguntas populares:</p>
+              <p className="text-xs text-gray-400 mb-2 flex items-center space-x-1">
+                <Lightbulb className="w-3 h-3" />
+                <span>Perguntas populares:</span>
+              </p>
               <div className="flex flex-wrap gap-1">
                 {quickQuestions.slice(0, 3).map((question, index) => (
                   <button
                     key={index}
-                    onClick={() => setInputMessage(question.replace(/^[^\s]+\s/, ''))}
+                    onClick={() => setInputMessage(question)}
                     className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-2 py-1 rounded-full transition-colors"
                   >
-                    {question.split(' ')[0]} {question.split(' ').slice(1, 4).join(' ')}...
+                    {question.length > 25 ? question.slice(0, 25) + '...' : question}
                   </button>
                 ))}
               </div>
@@ -244,7 +248,7 @@ export default function AIConsultant({ isOpen, onClose }: AIConsultantProps) {
                 {isLoading ? (
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                 ) : (
-                  <span>🚀</span>
+                  <Send className="w-4 h-4" />
                 )}
               </button>
             </div>

@@ -1,37 +1,9 @@
 'use client'; 
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import CarCard from '@/components/CarCard';
-import { searchCarsAction } from '@/app/actions'; 
-import type { SearchResult, SearchParams } from '@/lib/carService';
+import { Bot, Zap, Target } from 'lucide-react';
 
 export default function HomePage() {
-  const [params, setParams] = useState<SearchParams>({
-    query: '',
-    location: '',
-    maxPrice: undefined
-  });
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
-
-  const handleSearch = async (event: React.FormEvent) => {
-    event.preventDefault(); 
-    setIsLoading(true);
-    setHasSearched(true);
-    const searchResult = await searchCarsAction(params);
-    setResults(searchResult);
-    setIsLoading(false);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setParams(prevParams => ({
-      ...prevParams,
-      [name]: name === 'maxPrice' ? (value ? Number(value) : undefined) : value,
-    }));
-  };
 
   return (
     <main className="min-h-screen">
@@ -129,174 +101,42 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Seção de Busca Avançada */}
+      {/* Seção de Apresentação */}
       <section className="relative py-20 px-4">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center"
           >
-            <h2 className="font-orbitron text-4xl md:text-5xl font-bold text-text-primary mb-6">
-              Encontre seu 
-              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"> Veículo Ideal</span>
-            </h2>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Use nossa busca inteligente com filtros avançados para descobrir exatamente o que você procura
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <form onSubmit={handleSearch} className="bg-card-gradient backdrop-blur-xl rounded-2xl border border-dark-border/50 p-8 shadow-2xl">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {/* Campo Marca/Modelo */}
-                <div className="relative group">
-                  <label className="text-sm font-semibold text-neon-blue mb-3 flex items-center">
-                    🚗 Marca ou Modelo
-                  </label>
-                  <input
-                    type="text"
-                    name="query"
-                    value={params.query}
-                    onChange={handleInputChange}
-                    placeholder="Ex: Toyota Corolla"
-                    className="w-full p-4 bg-dark-secondary/50 border-2 border-dark-border rounded-xl focus:border-neon-blue focus:outline-none transition-all duration-300 text-text-primary placeholder-text-secondary/60 group-hover:border-neon-blue/50"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/5 to-neon-purple/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                {/* Campo Localização */}
-                <div className="relative group">
-                  <label className="text-sm font-semibold text-neon-green mb-3 flex items-center">
-                    📍 Localização
-                  </label>
-                  <input
-                    type="text"
-                    name="location"
-                    value={params.location}
-                    onChange={handleInputChange}
-                    placeholder="Ex: São Paulo"
-                    className="w-full p-4 bg-dark-secondary/50 border-2 border-dark-border rounded-xl focus:border-neon-green focus:outline-none transition-all duration-300 text-text-primary placeholder-text-secondary/60 group-hover:border-neon-green/50"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-neon-green/5 to-neon-blue/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
-
-                {/* Campo Preço */}
-                <div className="relative group">
-                  <label className="text-sm font-semibold text-neon-purple mb-3 flex items-center">
-                    💰 Preço Máximo
-                  </label>
-                  <input
-                    type="number"
-                    name="maxPrice"
-                    value={params.maxPrice || ''}
-                    onChange={handleInputChange}
-                    placeholder="Ex: 150000"
-                    className="w-full p-4 bg-dark-secondary/50 border-2 border-dark-border rounded-xl focus:border-neon-purple focus:outline-none transition-all duration-300 text-text-primary placeholder-text-secondary/60 group-hover:border-neon-purple/50"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-neon-purple/5 to-neon-green/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                </div>
+            <div className="bg-card-gradient backdrop-blur-xl rounded-2xl border border-dark-border/50 p-12 shadow-2xl">
+              <h2 className="font-orbitron text-4xl md:text-5xl font-bold text-text-primary mb-8">
+                A revolução na 
+                <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"> busca de veículos</span>
+              </h2>
+              <p className="text-lg text-text-secondary max-w-3xl mx-auto leading-relaxed mb-8">
+                CarLens utiliza inteligência artificial avançada para conectar você ao veículo perfeito. 
+                Nossa plataforma analisa suas preferências, orçamento e necessidades para oferecer 
+                recomendações personalizadas e precisas.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <span className="inline-flex items-center px-6 py-3 bg-blue-500/20 text-blue-300 rounded-full text-sm font-semibold border border-blue-500/30">
+                  <Bot className="w-4 h-4 mr-2" />
+                  Powered by AI
+                </span>
+                <span className="inline-flex items-center px-6 py-3 bg-purple-500/20 text-purple-300 rounded-full text-sm font-semibold border border-purple-500/30">
+                  <Target className="w-4 h-4 mr-2" />
+                  Resultados Precisos
+                </span>
               </div>
-
-              {/* Botão de Busca */}
-              <div className="text-center">
-                <button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="relative bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-12 rounded-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl "
-                >
-                  <span className="relative z-10 flex items-center justify-center space-x-3">
-                    {isLoading ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        <span>Buscando...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Encontrar Carros</span>
-                      </>
-                    )}
-                  </span>
-                </button>
-              </div>
-
-            </form>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Seção de Resultados */}
-      {hasSearched && (
-        <section className="py-20 px-4">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-12"
-            >
-              <h3 className="font-orbitron text-3xl md:text-4xl font-bold text-text-primary mb-4">
-                {results.length > 0 ? (
-                  <>Encontramos <span className="text-neon-green">{results.length}</span> veículos para você</>
-                ) : (
-                  <>Nenhum resultado <span className="text-neon-red">encontrado</span></>
-                )}
-              </h3>
-              {results.length > 0 && (
-                <p className="text-text-secondary">
-                  Explore as opções abaixo e encontre seu veículo ideal
-                </p>
-              )}
-            </motion.div>
-
-            {results.length > 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-              >
-                {results.map((result, index) => (
-                  <motion.div
-                    key={`${result.car.Name}-${result.car.Model}`}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                  >
-                    <CarCard result={result} />
-                  </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                className="text-center py-20"
-              >
-                <div className="text-8xl mb-6">🔍</div>
-                <h3 className="font-orbitron text-2xl font-bold text-text-primary mb-4">
-                  Ops! Não encontramos resultados
-                </h3>
-                <p className="text-text-secondary mb-8 max-w-md mx-auto">
-                  Tente ajustar seus filtros de busca ou procure por outros modelos de veículos
-                </p>
-              </motion.div>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* Seção de Features quando não há busca */}
-      {!hasSearched && (
+      {/* Seção de Features */}
         <section className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -317,19 +157,19 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  icon: '🤖',
+                  icon: <Bot className="w-16 h-16" />,
                   title: 'IA Avançada',
                   description: 'Nossa inteligência artificial analisa milhares de veículos para encontrar a combinação perfeita para você',
                   color: 'neon-blue'
                 },
                 {
-                  icon: '⚡',
+                  icon: <Zap className="w-16 h-16" />,
                   title: 'Busca Instantânea',
                   description: 'Resultados em tempo real com filtros inteligentes que se adaptam às suas preferências',
                   color: 'neon-purple'
                 },
                 {
-                  icon: '🎯',
+                  icon: <Target className="w-16 h-16" />,
                   title: 'Precisão Total',
                   description: 'Encontre exatamente o que procura com nossa tecnologia de matching de alta precisão',
                   color: 'neon-green'
@@ -343,7 +183,7 @@ export default function HomePage() {
                   viewport={{ once: true }}
                   className="group relative bg-card-gradient backdrop-blur-xl rounded-2xl p-8 border border-dark-border/50 hover:border-neon-blue/50 transition-all duration-300 hover:transform hover:scale-105"
                 >
-                  <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <div className="mb-6 group-hover:scale-110 transition-transform duration-300 text-neon-blue">
                     {feature.icon}
                   </div>
                   <h3 className={`font-orbitron text-xl font-bold text-${feature.color} mb-4`}>
@@ -360,7 +200,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-      )}
     </main>
   );
 }

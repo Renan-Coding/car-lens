@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Search, RotateCcw } from 'lucide-react';
 import CarCard from '@/components/CarCard';
 import { searchCarsAction } from '@/app/actions';
 import type { SearchResult } from '@/lib/carService';
@@ -103,8 +104,6 @@ export default function CatalogPage() {
         return 'Menor Preço';
       case 'price-desc':
         return 'Maior Preço';
-      case 'brand':
-        return 'Marca A-Z';
       default:
         return 'Ordenar';
     }
@@ -113,7 +112,6 @@ export default function CatalogPage() {
   const sortOptions = [
     { value: 'price-asc', label: 'Menor Preço' },
     { value: 'price-desc', label: 'Maior Preço' },
-    { value: 'brand', label: 'Marca A-Z' },
   ];
 
   return (
@@ -185,9 +183,10 @@ export default function CatalogPage() {
             <div className="flex items-end">
               <button
                 onClick={handleSearch}
-                className="w-full px-6 py-3 bg-blue text-white rounded-lg font-semibold hover:shadow-glow-blue transition-all duration-300"
+                className="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-semibold hover:shadow-glow-blue transition-all duration-300 flex items-center justify-center space-x-2"
               >
-                🔍 Buscar
+                <Search className="w-4 h-4" />
+                <span>Buscar</span>
               </button>
             </div>
           </div>
@@ -285,7 +284,9 @@ export default function CatalogPage() {
             transition={{ duration: 0.6 }}
             className="text-center py-20"
           >
-            <div className="text-8xl mb-6">🔍</div>
+            <div className="mb-6 flex justify-center">
+              <Search className="w-24 h-24 text-text-secondary" />
+            </div>
             <h3 className="font-orbitron text-2xl font-bold text-text-primary mb-4">
               Nenhum veículo encontrado
             </h3>
@@ -301,7 +302,10 @@ export default function CatalogPage() {
               }}
               className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-semibold hover:shadow-glow-blue transition-all duration-300"
             >
-              🔄 Limpar Busca
+              <div className="flex items-center space-x-2">
+                <RotateCcw className="w-4 h-4" />
+                <span>Limpar Busca</span>
+              </div>
             </button>
           </motion.div>
         )}
